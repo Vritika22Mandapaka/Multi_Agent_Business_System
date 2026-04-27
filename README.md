@@ -24,6 +24,8 @@ The final output includes:
 * Consolidated risk list
 * Final recommendation
 
+The project now also includes a **Streamlit web interface** for live demo presentation and user-friendly interaction.
+
 ---
 
 ## Business Problem
@@ -57,6 +59,7 @@ The system is built using:
 * **llama.cpp (fallback-ready)** → local LLM backup
 * **PyMuPDF** → PDF input parsing
 * **Python tools** → calculator + web search simulation
+* **Streamlit** → web-based interactive UI for demo and presentation
 
 ---
 
@@ -190,6 +193,16 @@ Final output:
 * Confidence validation
 * Structured output evaluation
 
+### UI Features
+
+* Streamlit dashboard
+* PDF/TXT upload support
+* Manual business idea input
+* Real-time final report generation
+* Agent-wise output display
+* Evaluation metrics display
+* Consistency score visualization
+
 ---
 
 ## Project Structure
@@ -227,6 +240,8 @@ Multi_Agent_Busisys/
 │
 ├── output/
 │
+├── streamlit_app.py
+│
 ├── requirements.txt
 ├── .env
 ├── .gitignore
@@ -237,7 +252,7 @@ Multi_Agent_Busisys/
 
 ## Installation
 
-### Step 1 — Create Virtual Environment
+## Step 1 — Create Virtual Environment
 
 ```powershell
 py -m venv .venv
@@ -246,7 +261,7 @@ py -m venv .venv
 
 ---
 
-### Step 2 — Install Requirements
+## Step 2 — Install Requirements
 
 ```powershell
 pip install -r requirements.txt
@@ -254,7 +269,7 @@ pip install -r requirements.txt
 
 ---
 
-### Step 3 — Add Environment Variables
+## Step 3 — Add Environment Variables
 
 Create `.env`
 
@@ -268,7 +283,7 @@ OPENAI_MODEL=gpt-5-nano
 
 ## Running the Project
 
-Run:
+## Terminal Version
 
 ```powershell
 py -m app.main
@@ -281,6 +296,26 @@ input/sample_business_idea.txt
 ```
 
 or any custom PDF/TXT business idea file.
+
+---
+
+## Streamlit Web App Version
+
+```powershell
+streamlit run streamlit_app.py
+```
+
+This opens a browser-based dashboard where users can:
+
+* Upload PDF/TXT files
+* Type business ideas manually
+* Run complete multi-agent analysis
+* View final reports
+* See all agent outputs
+* Check rubric scores
+* View consistency check results
+
+This version is ideal for final project presentation and professor demo.
 
 ---
 
@@ -349,6 +384,7 @@ Payback Period:
 | LangGraph          | Multi-agent orchestration  |
 | Evaluation         | Rubric + Consistency       |
 | Prompt Engineering | Zero-shot + Few-shot + CoT |
+| Streamlit UI       | Live interactive demo      |
 
 ---
 
@@ -369,7 +405,8 @@ This project demonstrates how modern AI agents can support real-world business s
 * tool calling
 * evaluation systems
 * multi-agent orchestration
+* interactive Streamlit presentation layer
 
 rather than simple single-prompt LLM outputs.
 
-It is designed to reflect realistic enterprise decision-making workflows.
+It is designed to reflect realistic enterprise decision-making workflows and present them in a professor-level production-ready format.
