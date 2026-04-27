@@ -1,0 +1,9 @@
+.venv/
+venv/
+__pycache__/
+.env
+*.pyc
+output/
+*.npy
+*.jsonl
+*.csv
