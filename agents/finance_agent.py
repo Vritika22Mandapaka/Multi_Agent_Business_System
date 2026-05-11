@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 import json
 from app.llm_client import call_llm_with_system
 from tools.calculator import run_finance_calculations
@@ -191,4 +189,3 @@ Return ONLY a JSON object with this exact schema:
             "analysis": analysis
         }
     }
->>>>>>> Stashed changes

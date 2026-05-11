@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 def calculate_break_even(monthly_fixed_costs, contribution_per_unit):
     if contribution_per_unit <= 0:
         return None
@@ -59,4 +57,3 @@ def run_finance_calculations(params):
         "year1_roi_percent": year1_roi,
         "payback_period_months": payback_months
     }
->>>>>>> Stashed changes
