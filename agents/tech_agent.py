@@ -26,7 +26,6 @@ Confidence Score:
 """
 
     result = call_llm(prompt)
-
     return {
         "tech_output": {
             "agent": "Tech Stack Agent",

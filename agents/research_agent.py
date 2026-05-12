@@ -31,7 +31,6 @@ Confidence Score:
 """
 
     result = call_llm(prompt)
-
     return {
         "research_output": {
             "agent": "Research Agent",

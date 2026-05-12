@@ -22,7 +22,6 @@ Major Risks:
 """
 
     result = call_llm(prompt)
-
     return {
         "retry_output": {
             "agent": "Retry Agent",

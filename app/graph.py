@@ -44,26 +44,18 @@ def build_graph():
     graph.add_node("synthesis_agent", synthesis_agent)
 
     graph.set_entry_point("research_agent")
-
     graph.add_edge("research_agent", "tech_agent")
     graph.add_edge("research_agent", "finance_agent")
 
     graph.add_conditional_edges(
         "tech_agent",
         confidence_router,
-        {
-            "retry_agent": "retry_agent",
-            "synthesis_agent": "synthesis_agent",
-        },
+        {"retry_agent": "retry_agent", "synthesis_agent": "synthesis_agent"},
     )
-
     graph.add_conditional_edges(
         "finance_agent",
         confidence_router,
-        {
-            "retry_agent": "retry_agent",
-            "synthesis_agent": "synthesis_agent",
-        },
+        {"retry_agent": "retry_agent", "synthesis_agent": "synthesis_agent"},
     )
 
     graph.add_edge("retry_agent", "synthesis_agent")

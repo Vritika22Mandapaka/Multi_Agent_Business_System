@@ -27,7 +27,6 @@ def main():
         print("No Northeast US state detected. Regulatory compliance will be skipped.")
 
     app = build_graph()
-
     initial_state = {
         "business_idea": business_idea,
         "research_output": None,

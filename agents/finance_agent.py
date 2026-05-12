@@ -43,7 +43,6 @@ Confidence Score:
 """
 
     result = call_llm(prompt)
-
     return {
         "finance_output": {
             "agent": "Finance Agent",

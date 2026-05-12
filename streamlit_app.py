@@ -12,7 +12,6 @@ from rag.extract_state import extract_state
 
 def extract_text_from_pdf(uploaded_file):
     text = ""
-
     with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
         temp_file.write(uploaded_file.read())
         temp_path = temp_file.name
@@ -35,7 +34,6 @@ def run_multi_agent_system(business_text):
 
     app = build_graph()
     target_state = extract_state(business_text)
-
     initial_state = {
         "business_idea": business_text,
         "research_output": None,
@@ -46,7 +44,6 @@ def run_multi_agent_system(business_text):
         "target_state": target_state,
         "regulatory_context": None,
     }
-
     return app.invoke(initial_state)
 
 
@@ -69,7 +66,6 @@ def main():
 
     with tab1:
         uploaded_file = st.file_uploader("Upload PDF or TXT file", type=["pdf", "txt"])
-
         if uploaded_file:
             if uploaded_file.name.endswith(".pdf"):
                 business_text = extract_text_from_pdf(uploaded_file)
@@ -88,7 +84,6 @@ def main():
                 "for college students in New Jersey..."
             ),
         )
-
         if typed_text.strip():
             business_text = typed_text.strip()
 
@@ -101,7 +96,6 @@ def main():
             final_state = run_multi_agent_system(business_text)
 
         st.success("Analysis completed.")
-
         detected_state = final_state.get("target_state")
         if detected_state:
             st.info(
@@ -109,25 +103,19 @@ def main():
                 "Regulatory compliance context was included in the synthesis when available."
             )
         else:
-            st.warning(
-                "No Northeast US state detected in the business idea. "
-                "Regulatory compliance context was skipped."
-            )
+            st.warning("No Northeast US state detected. Regulatory compliance context was skipped.")
 
         st.header("Final Business Decision Report")
         st.markdown(final_state["final_report"]["report"])
 
         st.header("Agent Outputs")
         col1, col2, col3 = st.columns(3)
-
         with col1:
             st.subheader("Research Agent")
             st.write(final_state["research_output"]["analysis"])
-
         with col2:
             st.subheader("Technology Agent")
             st.write(final_state["tech_output"]["analysis"])
-
         with col3:
             st.subheader("Finance Agent")
             st.write(final_state["finance_output"]["analysis"])
@@ -147,10 +135,10 @@ def main():
         with st.spinner("Running second pass for consistency validation..."):
             second_run_state = run_multi_agent_system(business_text)
 
-        first_report = final_state["final_report"]["report"]
-        second_report = second_run_state["final_report"]["report"]
-        consistency_result = run_consistency_check(first_report, second_report)
-
+        consistency_result = run_consistency_check(
+            final_state["final_report"]["report"],
+            second_run_state["final_report"]["report"],
+        )
         st.metric(
             label="Consistency Score",
             value=f"{consistency_result['consistency_score_percent']}%",
