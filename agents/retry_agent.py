@@ -26,6 +26,12 @@ Major Risks:
     return {
         "retry_output": {
             "agent": "Retry Agent",
+<<<<<<< HEAD
             "analysis": result,
         }
     }
+=======
+            "analysis": result
+        }
+    }
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

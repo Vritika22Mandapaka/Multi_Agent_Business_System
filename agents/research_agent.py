@@ -4,6 +4,10 @@ from tools.web_search import get_market_context
 
 def research_agent(state):
     business_idea = state["business_idea"]
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     market_data = get_market_context()
 
     prompt = f"""
@@ -36,6 +40,12 @@ Confidence Score:
         "research_output": {
             "agent": "Research Agent",
             "web_search_results": market_data,
+<<<<<<< HEAD
             "analysis": result,
         }
     }
+=======
+            "analysis": result
+        }
+    }
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

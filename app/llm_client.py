@@ -5,6 +5,7 @@ from openai import OpenAI
 load_dotenv()
 
 
+<<<<<<< HEAD
 def _clear_blocking_proxy_env():
     for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "http_proxy", "https_proxy", "all_proxy"):
         value = os.getenv(name, "")
@@ -14,6 +15,9 @@ def _clear_blocking_proxy_env():
 
 def get_client():
     _clear_blocking_proxy_env()
+=======
+def get_client():
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     backend = os.getenv("LLM_BACKEND", "openai")
 
     if backend == "openai":
@@ -37,6 +41,7 @@ def get_model_name():
     return os.getenv("LOCAL_MODEL", "llama-3.2-1b-instruct")
 
 
+<<<<<<< HEAD
 def get_llm_client():
     from langchain_openai import ChatOpenAI
 
@@ -57,6 +62,8 @@ def get_llm_client():
     raise ValueError("Invalid LLM_BACKEND. Use 'openai' or 'local'.")
 
 
+=======
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
 def call_llm(prompt):
     client = get_client()
     model = get_model_name()
@@ -66,4 +73,8 @@ def call_llm(prompt):
         input=prompt
     )
 
+<<<<<<< HEAD
     return response.output_text
+=======
+    return response.output_text
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

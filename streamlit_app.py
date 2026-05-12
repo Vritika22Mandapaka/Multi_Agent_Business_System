@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # streamlit_app.py
 # Changes from original:
 #   1. Add target_state to initial_state (extracted from business_idea)
@@ -13,6 +14,17 @@ import fitz
 from evals.rubric_eval import run_rubric_evaluation
 from evals.consistency_check import run_consistency_check
 from rag.extract_state import extract_state   # <-- RAG
+=======
+import os
+import tempfile
+import streamlit as st
+import fitz
+
+from app.graph import build_graph
+from evals.rubric_eval import run_rubric_evaluation
+from evals.consistency_check import run_consistency_check
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
 
 st.set_page_config(
     page_title="AI Multi-Agent Business Decision System",
@@ -20,6 +32,7 @@ st.set_page_config(
     layout="wide"
 )
 
+<<<<<<< HEAD
 st.sidebar.caption(f"Python: {sys.executable}")
 
 
@@ -33,10 +46,29 @@ def extract_text_from_pdf(uploaded_file):
         text += page.get_text()
     doc.close()
     os.remove(temp_path)
+=======
+
+def extract_text_from_pdf(uploaded_file):
+    text = ""
+
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as temp_file:
+        temp_file.write(uploaded_file.read())
+        temp_path = temp_file.name
+
+    doc = fitz.open(temp_path)
+
+    for page in doc:
+        text += page.get_text()
+
+    doc.close()
+    os.remove(temp_path)
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     return text.strip()
 
 
 def run_multi_agent_system(business_text):
+<<<<<<< HEAD
     from app.graph import build_graph
 
     app = build_graph()
@@ -45,15 +77,23 @@ def run_multi_agent_system(business_text):
     target_state = extract_state(business_text)
     # <-- end RAG
 
+=======
+    app = build_graph()
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     initial_state = {
         "business_idea": business_text,
         "research_output": None,
         "tech_output": None,
         "finance_output": None,
         "retry_output": None,
+<<<<<<< HEAD
         "final_report": None,
         "target_state": target_state,      # <-- RAG
         "regulatory_context": None,        # <-- RAG
+=======
+        "final_report": None
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     }
 
     final_state = app.invoke(initial_state)
@@ -69,11 +109,19 @@ business_text = ""
 
 with tab1:
     uploaded_file = st.file_uploader("Upload PDF or TXT file", type=["pdf", "txt"])
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     if uploaded_file:
         if uploaded_file.name.endswith(".pdf"):
             business_text = extract_text_from_pdf(uploaded_file)
         else:
             business_text = uploaded_file.read().decode("utf-8").strip()
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
         st.subheader("Input Preview")
         st.text_area("Business Idea Text", business_text, height=200)
 
@@ -81,11 +129,21 @@ with tab2:
     typed_text = st.text_area(
         "Enter your business idea",
         height=200,
+<<<<<<< HEAD
         placeholder="Example: I want to launch an AI-powered grocery delivery startup for college students in New York..."
     )
     if typed_text.strip():
         business_text = typed_text.strip()
 
+=======
+        placeholder="Example: I want to launch an AI-powered grocery delivery startup for college students..."
+    )
+
+    if typed_text.strip():
+        business_text = typed_text.strip()
+
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
 if st.button("Run Multi-Agent Analysis"):
     if not business_text:
         st.error("Please upload a file or type a business idea first.")
@@ -95,6 +153,7 @@ if st.button("Run Multi-Agent Analysis"):
 
         st.success("Analysis completed!")
 
+<<<<<<< HEAD
         # <-- RAG: show detected state
         detected_state = final_state.get("target_state")
         if detected_state:
@@ -103,10 +162,16 @@ if st.button("Run Multi-Agent Analysis"):
             st.warning("No Northeast US state detected in the business idea. Regulatory table skipped.")
         # <-- end RAG
 
+=======
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
         st.header("Final Business Decision Report")
         st.markdown(final_state["final_report"]["report"])
 
         st.header("Agent Outputs")
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
         col1, col2, col3 = st.columns(3)
 
         with col1:
@@ -126,20 +191,44 @@ if st.button("Run Multi-Agent Analysis"):
             st.write(final_state["retry_output"]["analysis"])
 
         st.header("Rubric-Based Evaluation")
+<<<<<<< HEAD
         evaluation_results = run_rubric_evaluation(final_state)
         for agent, result in evaluation_results.items():
             st.write(f"**{agent}:** {result['score']} / {result['total']}")
+=======
+
+        evaluation_results = run_rubric_evaluation(final_state)
+
+        for agent, result in evaluation_results.items():
+            st.write(f"**{agent}:** {result['score']} / {result['total']}")
+
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
             if result["missing"]:
                 st.warning(f"Missing: {', '.join(result['missing'])}")
 
         st.header("Consistency Check")
+<<<<<<< HEAD
         with st.spinner("Running second pass for consistency validation..."):
             second_run_state = run_multi_agent_system(business_text)
             first_report = final_state["final_report"]["report"]
             second_report = second_run_state["final_report"]["report"]
             consistency_result = run_consistency_check(first_report, second_report)
+=======
+
+        with st.spinner("Running second pass for consistency validation..."):
+            second_run_state = run_multi_agent_system(business_text)
+
+        first_report = final_state["final_report"]["report"]
+        second_report = second_run_state["final_report"]["report"]
+
+        consistency_result = run_consistency_check(first_report, second_report)
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
 
         st.metric(
             label="Consistency Score",
             value=f"{consistency_result['consistency_score_percent']}%"
+<<<<<<< HEAD
         )
+=======
+        )
+>>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
