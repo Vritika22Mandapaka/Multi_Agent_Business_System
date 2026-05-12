@@ -19,7 +19,18 @@ def score_output(text, required_keywords):
 
 def run_rubric_evaluation(final_state):
     research_text = final_state["research_output"]["analysis"]
-    tech_text = final_state["tech_output"]["analysis"]
+
+    tech_out = final_state["tech_output"]
+    tech_text = " ".join([
+        tech_out.get("feasibility_verdict", ""),
+        tech_out.get("reasoning_summary", ""),
+        str(tech_out.get("technical_risks", "")),
+        str(tech_out.get("development_effort", "")),
+        str(tech_out.get("project_requirements", "")),
+        str(tech_out.get("systems_architecture", "")),
+        str(tech_out.get("operational_requirements", ""))
+    ])
+
     finance_text = final_state["finance_output"]["analysis"]
     final_report_text = final_state["final_report"]["report"]
 
@@ -31,9 +42,9 @@ def run_rubric_evaluation(final_state):
     ]
 
     tech_keywords = [
-        "feasibility",
-        "tech stack",
-        "effort",
+        "feasib",
+        "backend",
+        "timeline",
         "risk"
     ]
 

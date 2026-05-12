@@ -68,6 +68,54 @@ if __name__ == "__main__":
 
         final_state = run_multi_agent_system(business_text)
 
+        print("\n  TECHNICAL AGENT OUTPUT \n")
+        t = final_state["tech_output"]
+        req = t.get("project_requirements", {})
+        arch = t.get("systems_architecture", {})
+        effort = t.get("development_effort", {})
+        ops = t.get("operational_requirements", {})
+
+        print(f"Feasibility Verdict: {t.get('feasibility_verdict', '')}\n")
+
+        print("Tech Stack:")
+        print(f"  Frontend:           {', '.join(req.get('frontend', []))}")
+        print(f"  Backend:            {', '.join(req.get('backend', []))}")
+        print(f"  Database:           {', '.join(req.get('database', []))}")
+        print(f"  AI/ML Stack:        {', '.join(req.get('ai_ml_stack', []))}")
+        print(f"  APIs & Tools:       {', '.join(req.get('apis_tools', []))}")
+
+        print("\nInfrastructure:")
+        print(f"  Cloud Services:     {', '.join(req.get('cloud_services', []))}")
+        print(f"  Deployment:         {', '.join(req.get('deployment_requirements', []))}")
+        print(f"  Scalability:        {', '.join(req.get('scalability_requirements', []))}")
+        print(f"  Monitoring:         {', '.join(req.get('monitoring_logging', []))}")
+
+        print("\nSystems Architecture:")
+        print(f"  Style:              {arch.get('architecture_style', '')}")
+        print(f"  Key Components:     {', '.join(arch.get('key_components', []))}")
+        print(f"  Security:           {', '.join(arch.get('security_architecture', []))}")
+
+        print("\nImplementation Plan:")
+        print(f"  MVP Timeline:       {effort.get('mvp_timeline', '')}")
+        print(f"  Full Timeline:      {effort.get('estimated_timeline', '')}")
+        print(f"  Team Size:          {effort.get('recommended_team_size', '')}")
+        print(f"  Roles:              {', '.join(effort.get('required_roles', []))}")
+        print(f"  Phases:             {' | '.join(effort.get('development_phases', []))}")
+        print(f"  Complexity:         {effort.get('complexity_level', '')}")
+
+        print("\nOperational Requirements:")
+        print(f"  Compliance:         {', '.join(ops.get('compliance_requirements', []))}")
+        print(f"  Reliability:        {', '.join(ops.get('reliability_requirements', []))}")
+        print(f"  Maintenance:        {', '.join(ops.get('maintenance_needs', []))}")
+
+        print("\nTechnical Risks:")
+        for risk in t.get("technical_risks", []):
+            print(f"  - {risk}")
+
+        print(f"\nSecurity Requirements:  {', '.join(req.get('security_requirements', []))}")
+        print(f"Confidence Score:       {t.get('confidence_score', '')}/100")
+        print(f"\nReasoning Summary:\n{t.get('reasoning_summary', '')}")
+
         print("\n  FINAL BUSINESS DECISION REPORT \n")
         print(final_state["final_report"]["report"])
 
@@ -76,13 +124,13 @@ if __name__ == "__main__":
         evaluation_results = run_rubric_evaluation(final_state)
 
         for agent, result in evaluation_results.items():
-         print(f"{agent}")
-         print(f"Score: {result['score']} / {result['total']}")
+            print(f"{agent}")
+            print(f"Score: {result['score']} / {result['total']}")
 
-        if result["missing"]:
-         print("Missing:", ", ".join(result["missing"]))
+            if result["missing"]:
+                print("Missing:", ", ".join(result["missing"]))
 
-        print("-" * 10)
+            print("-" * 10)
 
         print("\n CONSISTENCY CHECK \n")
 

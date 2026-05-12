@@ -29,13 +29,14 @@ def get_model_name():
     return os.getenv("LOCAL_MODEL", "llama-3.2-1b-instruct")
 
 
-def call_llm(prompt):
+def call_llm(prompt, temperature=0.7):
     client = get_client()
     model = get_model_name()
 
     response = client.responses.create(
         model=model,
-        input=prompt
+        input=prompt,
+        temperature=temperature
     )
 
     return response.output_text

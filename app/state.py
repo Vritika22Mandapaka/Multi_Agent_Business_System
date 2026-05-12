@@ -6,6 +6,7 @@ class AgentState(TypedDict):
 
     research_output: Optional[Dict]
     tech_output: Optional[Dict]
+    tech_eval: Optional[Dict]
     finance_output: Optional[Dict]
 
     retry_output: Optional[Dict]
