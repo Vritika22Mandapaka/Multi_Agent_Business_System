@@ -6,10 +6,6 @@ def finance_agent(state):
     business_idea = state["business_idea"]
     research_output = state.get("research_output", {})
     tech_output = state.get("tech_output", {})
-<<<<<<< HEAD
-=======
-
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     finance_calculations = run_finance_calculations()
 
     prompt = f"""
@@ -52,12 +48,6 @@ Confidence Score:
         "finance_output": {
             "agent": "Finance Agent",
             "calculator_results": finance_calculations,
-<<<<<<< HEAD
             "analysis": result,
         }
     }
-=======
-            "analysis": result
-        }
-    }
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

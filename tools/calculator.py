@@ -42,10 +42,5 @@ def run_finance_calculations():
         "total_investment": total_investment,
         "projected_5_year_profit": projected_5_year_profit,
         "roi_percent": round(roi, 2),
-<<<<<<< HEAD
         "payback_period_months": round(payback_period, 1),
     }
-=======
-        "payback_period_months": round(payback_period, 1)
-    }
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from langgraph.graph import END, StateGraph
 
 from agents.finance_agent import finance_agent
@@ -7,16 +6,6 @@ from agents.retry_agent import retry_agent
 from agents.synthesis_agent import synthesis_agent
 from agents.tech_agent import tech_agent
 from app.state import AgentState
-=======
-from langgraph.graph import StateGraph, END
-
-from app.state import AgentState
-from agents.research_agent import research_agent
-from agents.tech_agent import tech_agent
-from agents.finance_agent import finance_agent
-from agents.retry_agent import retry_agent
-from agents.synthesis_agent import synthesis_agent
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
 
 
 def confidence_router(state):
@@ -24,10 +13,6 @@ def confidence_router(state):
 
     for key in ["research_output", "tech_output", "finance_output"]:
         output = state.get(key)
-<<<<<<< HEAD
-=======
-
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
         if output:
             combined_text += str(output).lower()
 
@@ -39,11 +24,7 @@ def confidence_router(state):
         "confidence score: 5",
         "low confidence",
         "not feasible",
-<<<<<<< HEAD
         "high risk",
-=======
-        "high risk"
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     ]
 
     for signal in low_confidence_signals:
@@ -72,13 +53,8 @@ def build_graph():
         confidence_router,
         {
             "retry_agent": "retry_agent",
-<<<<<<< HEAD
             "synthesis_agent": "synthesis_agent",
         },
-=======
-            "synthesis_agent": "synthesis_agent"
-        }
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     )
 
     graph.add_conditional_edges(
@@ -86,20 +62,11 @@ def build_graph():
         confidence_router,
         {
             "retry_agent": "retry_agent",
-<<<<<<< HEAD
             "synthesis_agent": "synthesis_agent",
         },
-=======
-            "synthesis_agent": "synthesis_agent"
-        }
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33
     )
 
     graph.add_edge("retry_agent", "synthesis_agent")
     graph.add_edge("synthesis_agent", END)
 
-<<<<<<< HEAD
     return graph.compile()
-=======
-    return graph.compile()
->>>>>>> 0cf9a73e5092f5ac90c892b8da090b6bdabebf33

@@ -2,411 +2,139 @@
 
 ## Project Overview
 
-This project is an AI-powered Multi-Agent Business Decision System built for **FE524 – Prompt Engineering Lab for Business Applications** at **Stevens Institute of Technology**.
+This project is an AI-powered multi-agent business decision system for evaluating startup or product ideas.
 
-The system helps evaluate a business idea by simulating how real companies make strategic decisions.
+The system simulates a strategy review by running separate agents for:
 
-Instead of relying on separate teams for:
+* Market research
+* Technical feasibility
+* Financial analysis
+* Retry validation when confidence is low
+* Final synthesis and recommendation
 
-* Market Research
-* Technical Feasibility
-* Financial Analysis
-
-this system uses multiple AI agents to perform all three analyses automatically and generates one final business recommendation.
-
-The final output includes:
-
-* Go / No-Go decision
-* Confidence Score
-* Market analysis
-* Technical feasibility report
-* Financial viability report
-* Consolidated risk list
-* Final recommendation
-
-The project now also includes a **Streamlit web interface** for live demo presentation and user-friendly interaction.
-
----
-
-## Business Problem
-
-When companies plan major strategic decisions such as:
-
-* launching a new product
-* entering a new market
-* building a startup
-
-they usually need multiple teams working separately.
-
-This creates problems like:
-
-* slow decision-making
-* inconsistent assumptions
-* delayed execution
-* fragmented recommendations
-
-This project solves that by using AI agents working together inside a single LangGraph workflow.
-
----
+The project includes both a command-line entry point and a Streamlit web interface.
 
 ## System Architecture
 
-The system is built using:
+The system uses:
 
-* **LangGraph** → multi-agent workflow orchestration
-* **LangChain** → prompt templates and model wrappers
-* **OpenAI GPT-5 nano** → primary LLM
-* **llama.cpp (fallback-ready)** → local LLM backup
-* **PyMuPDF** → PDF input parsing
-* **Python tools** → calculator + web search simulation
-* **Streamlit** → web-based interactive UI for demo and presentation
-
----
+* LangGraph for multi-agent workflow orchestration
+* LangChain OpenAI wrappers for chat model calls
+* OpenAI as the primary LLM backend
+* PyMuPDF for PDF parsing
+* Streamlit for the demo UI
+* Chroma via `langchain-chroma` for optional regulatory RAG retrieval
 
 ## Agent Workflow
 
-## Agent 1 — Research Agent
+1. Research Agent
+   Analyzes market trends, competitors, demand, and external risks.
 
-Responsible for:
+2. Technology Stack Agent
+   Evaluates technical feasibility, stack choices, development effort, and technical risks.
 
-* Market trends
-* Competitor analysis
-* Demand estimation
-* External risks
+3. Finance Agent
+   Uses calculator outputs to estimate startup costs, ROI, break-even, payback period, and financial risks.
 
-Tool used:
+4. Retry Agent
+   Re-evaluates the idea if low-confidence or high-risk signals are detected.
 
-* Web Search Tool
+5. Synthesis Agent
+   Combines all outputs into one final decision report. If a supported Northeast US state is detected, it adds a structured regulatory compliance section using retrieved RAG context when available.
 
-Output:
+Supported state detection currently focuses on:
 
-* Market opportunity summary
-* Competitor analysis
-* Demand assessment
-* External risk flags
-
----
-
-## Agent 2 — Technology Stack Agent
-
-Responsible for:
-
-* Technical feasibility
-* Stack recommendation
-* Development effort estimate
-* Technical risks
-
-Output:
-
-* Feasibility verdict
-* Recommended tech stack
-* Development effort
-* Technical risks
-
----
-
-## Agent 3 — Finance Agent
-
-Responsible for:
-
-* Startup cost estimation
-* ROI analysis
-* Break-even calculation
-* Payback period
-* Financial risks
-
-Tool used:
-
-* Calculator Tool
-
-Output:
-
-* Cost breakdown
-* ROI projection
-* Break-even analysis
-* Financial risk flags
-
----
-
-## Retry Agent
-
-Responsible for:
-
-* Re-analysis when confidence is low
-
-Used when:
-
-* confidence score is too low
-* high-risk signals are detected
-* business feasibility is uncertain
-
-This improves reliability and matches real multi-agent decision systems.
-
----
-
-## Synthesis Layer
-
-Responsible for:
-
-* Combining all agent outputs
-
-Final output:
-
-* Final Verdict
-* Overall Confidence Score
-* Research Summary
-* Technology Summary
-* Finance Summary
-* Consolidated Risk List
-* Final Recommendation
-
----
-
-## Features Implemented
-
-### Core Features
-
-* PDF input support
-* TXT input support
-* GPT-5 nano integration
-* OpenAI API connection
-* Local LLM fallback-ready structure
-* LangGraph multi-agent execution
-
-### Tool Usage
-
-* Web Search Tool for Research Agent
-* Calculator Tool for Finance Agent
-
-### Advanced Features
-
-* Parallel/branching workflow
-* Conditional retry routing
-* Low-confidence retry node
-* Shared typed state
-* Final synthesis node
-
-### Evaluation Features
-
-* Rubric-based scoring
-* Consistency check across multiple runs
-* Confidence validation
-* Structured output evaluation
-
-### UI Features
-
-* Streamlit dashboard
-* PDF/TXT upload support
-* Manual business idea input
-* Real-time final report generation
-* Agent-wise output display
-* Evaluation metrics display
-* Consistency score visualization
-
----
+* NY
+* NJ
+* PA
+* CT
+* MA
 
 ## Project Structure
 
 ```text
-Multi_Agent_Busisys/
-│
-├── app/
-│   ├── main.py
-│   ├── graph.py
-│   ├── state.py
-│   ├── llm_client.py
-│   └── __init__.py
-│
-├── agents/
-│   ├── research_agent.py
-│   ├── tech_agent.py
-│   ├── finance_agent.py
-│   ├── retry_agent.py
-│   ├── synthesis_agent.py
-│   └── __init__.py
-│
-├── tools/
-│   ├── calculator.py
-│   ├── web_search.py
-│   └── __init__.py
-│
-├── evals/
-│   ├── rubric_eval.py
-│   ├── consistency_check.py
-│   └── __init__.py
-│
-├── input/
-│   └── sample_business_idea.txt
-│
-├── output/
-│
-├── streamlit_app.py
-│
-├── requirements.txt
-├── .env
-├── .gitignore
-└── README.md
+Multi_Agent_Business_System/
+  agents/
+    research_agent.py
+    tech_agent.py
+    finance_agent.py
+    retry_agent.py
+    synthesis_agent.py
+  app/
+    graph.py
+    llm_client.py
+    main.py
+    state.py
+  evals/
+    consistency_check.py
+    rubric_eval.py
+  input/
+    sample_business_idea.txt
+  rag/
+    extract_state.py
+    ingest.py
+    retrieve.py
+  tools/
+    calculator.py
+    web_search.py
+  requirements.txt
+  streamlit_app.py
 ```
 
----
+## Setup
 
-## Installation
-
-## Step 1 — Create Virtual Environment
+Use Python 3.12 for this project. Some dependencies do not install cleanly on Python 3.14.
 
 ```powershell
-py -m venv .venv
-.\.venv\Scripts\activate
+py -3.12 -m venv .venv312
+.\.venv312\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
----
-
-## Step 2 — Install Requirements
-
-```powershell
-pip install -r requirements.txt
-```
-
----
-
-## Step 3 — Add Environment Variables
-
-Create `.env`
+Create a `.env` file:
 
 ```env
 OPENAI_API_KEY=your_api_key_here
 LLM_BACKEND=openai
 OPENAI_MODEL=gpt-5-nano
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 ```
 
----
-
-## Running the Project
-
-## Terminal Version
+## Run Streamlit
 
 ```powershell
-py -m app.main
+.\.venv312\Scripts\python.exe -m streamlit run streamlit_app.py
 ```
 
-Then enter:
+## Run CLI
+
+```powershell
+.\.venv312\Scripts\python.exe -m app.main
+```
+
+When prompted, enter:
 
 ```text
 input/sample_business_idea.txt
 ```
 
-or any custom PDF/TXT business idea file.
+## Optional RAG Index
 
----
-
-## Streamlit Web App Version
+To rebuild the regulatory Chroma index:
 
 ```powershell
-streamlit run streamlit_app.py
+.\.venv312\Scripts\python.exe -m rag.ingest
 ```
 
-This opens a browser-based dashboard where users can:
+The generated `chroma_regulatory/` directory is local runtime data and should not be committed.
 
-* Upload PDF/TXT files
-* Type business ideas manually
-* Run complete multi-agent analysis
-* View final reports
-* See all agent outputs
-* Check rubric scores
-* View consistency check results
+## Git Notes
 
-This version is ideal for final project presentation and professor demo.
+Do not commit:
 
----
+* `.env`
+* `.venv/`
+* `.venv312/`
+* `chroma_regulatory/`
+* `__pycache__/`
 
-## Evaluation Metrics
-
-## Rubric-Based Scoring
-
-Each agent is scored based on required outputs.
-
-Example:
-
-* Research Agent → market, competitors, demand, risk
-* Finance Agent → cost, ROI, break-even, payback
-
----
-
-## Consistency Check
-
-The same input is run multiple times.
-
-The system compares:
-
-* recommendation quality
-* confidence stability
-* repeated conclusions
-
-This validates output consistency.
-
-Example result:
-
-```text
-Consistency Score: 87.5%
-```
-
----
-
-## Example Final Output
-
-```text
-Final Verdict:
-Proceed with campus-first MVP
-
-Confidence Score:
-7.5 / 10
-
-Break-even:
-55,437 orders/month
-
-ROI:
-523%
-
-Payback Period:
-18.1 months
-```
-
----
-
-## Course Concepts Used
-
-| Course Topic       | Implementation             |
-| ------------------ | -------------------------- |
-| Few-shot prompting | Agent prompt design        |
-| Chain-of-thought   | Synthesis reasoning        |
-| Tool use           | Calculator + Web Search    |
-| Open models        | llama.cpp fallback         |
-| LangGraph          | Multi-agent orchestration  |
-| Evaluation         | Rubric + Consistency       |
-| Prompt Engineering | Zero-shot + Few-shot + CoT |
-| Streamlit UI       | Live interactive demo      |
-
----
-
-## Authors
-
-* Sri Harsha Chinta
-* Kamakshi Padma Vritika Manadapaka
-* Siddharth Raju Vysyaraju
-* Sri Lasya Siripurapu
-
----
-
-## Final Note
-
-This project demonstrates how modern AI agents can support real-world business strategy decisions using:
-
-* structured reasoning
-* tool calling
-* evaluation systems
-* multi-agent orchestration
-* interactive Streamlit presentation layer
-
-rather than simple single-prompt LLM outputs.
-
-It is designed to reflect realistic enterprise decision-making workflows and present them in a professor-level production-ready format.
+Commit source files, requirements, README, sample input, and RAG code.
