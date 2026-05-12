@@ -51,14 +51,18 @@ def get_llm_client():
     raise ValueError("Invalid LLM_BACKEND. Use 'openai' or 'local'.")
 
 
-def call_llm(prompt, temperature=0.7):
+def call_llm(prompt, temperature=None):
     client = get_client()
     model = get_model_name()
 
-    response = client.responses.create(
-        model=model,
-        input=prompt,
-        temperature=temperature,
-    )
+    request = {
+        "model": model,
+        "input": prompt,
+    }
+
+    if temperature is not None:
+        request["temperature"] = temperature
+
+    response = client.responses.create(**request)
 
     return response.output_text
