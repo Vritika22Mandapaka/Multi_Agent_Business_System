@@ -398,8 +398,37 @@ def tech_agent(state, prompt_type="cot"):
 
         evaluation = evaluate_technical_output(parsed_result)
 
+        r = validated_result
+        req = r.project_requirements
+        arch = r.systems_architecture
+        effort = r.development_effort
+        ops = r.operational_requirements
+
+        analysis = "\n".join([
+            f"Feasibility: {r.feasibility_verdict}",
+            f"\nTech Stack:",
+            f"  Frontend: {', '.join(req.frontend)}",
+            f"  Backend: {', '.join(req.backend)}",
+            f"  Database: {', '.join(req.database)}",
+            f"  AI/ML: {', '.join(req.ai_ml_stack)}",
+            f"  APIs/Tools: {', '.join(req.apis_tools)}",
+            f"\nArchitecture: {arch.architecture_style}",
+            f"Key Components: {', '.join(arch.key_components)}",
+            f"\nDevelopment: {effort.mvp_timeline} MVP | {effort.estimated_timeline} full platform",
+            f"Team: {effort.recommended_team_size} — {', '.join(effort.required_roles)}",
+            f"Complexity: {effort.complexity_level}",
+            f"\nCompliance: {', '.join(ops.compliance_requirements)}",
+            f"Reliability: {', '.join(ops.reliability_requirements)}",
+            f"\nTechnical Risks: {'; '.join(r.technical_risks)}",
+            f"\nConfidence Score: {r.confidence_score}/100",
+            f"\nReasoning: {r.reasoning_summary}",
+        ])
+
+        output = validated_result.model_dump()
+        output["analysis"] = analysis
+
         return {
-            "tech_output": validated_result.model_dump(),
+            "tech_output": output,
             "tech_eval": evaluation
         }
 
