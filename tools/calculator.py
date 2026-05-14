@@ -1,46 +1,60 @@
-def calculate_break_even(fixed_costs, contribution_per_order):
-    if contribution_per_order <= 0:
-        return "Break-even cannot be calculated because contribution per order must be greater than 0."
+def calculate_break_even(monthly_fixed_costs, contribution_per_unit):
+    if contribution_per_unit <= 0:
+        return None
+    return round(monthly_fixed_costs / contribution_per_unit, 0)
 
-    return fixed_costs / contribution_per_order
 
-
-def calculate_roi(total_profit, total_investment):
+def calculate_roi(projected_year1_profit, total_investment):
     if total_investment <= 0:
-        return "ROI cannot be calculated because investment must be greater than 0."
-
-    return (total_profit / total_investment) * 100
-
-
-def calculate_payback_period(total_investment, monthly_profit):
-    if monthly_profit <= 0:
-        return "Payback period cannot be calculated because monthly profit must be greater than 0."
-
-    return total_investment / monthly_profit
+        return None
+    return round((projected_year1_profit / total_investment) * 100, 2)
 
 
-def run_finance_calculations():
-    fixed_costs = 260000
-    revenue_per_order = 7.19
-    variable_cost_per_order = 2.50
-    contribution_per_order = revenue_per_order - variable_cost_per_order
+def calculate_payback_period(total_investment, monthly_profit_at_scale):
+    if monthly_profit_at_scale <= 0:
+        return None
+    return round(total_investment / monthly_profit_at_scale, 1)
 
-    total_investment = 3000000
-    projected_5_year_profit = 15700000
-    monthly_profit_after_scale = 166000
 
-    break_even_orders = calculate_break_even(fixed_costs, contribution_per_order)
-    roi = calculate_roi(projected_5_year_profit, total_investment)
-    payback_period = calculate_payback_period(total_investment, monthly_profit_after_scale)
+def run_finance_calculations(params):
+    startup_costs = params["startup_costs"]
+    revenue_per_unit = params["revenue_per_unit"]
+    variable_cost_per_unit = params["variable_cost_per_unit"]
+    monthly_fixed_costs = params["monthly_fixed_costs"]
+    total_investment = params["total_investment"]
+    projected_year1_revenue = params["projected_year1_revenue"]
+    monthly_profit_at_scale = params["monthly_profit_at_scale"]
+
+    if revenue_per_unit <= variable_cost_per_unit:
+        raise ValueError(
+            f"Negative unit economics: revenue_per_unit ({revenue_per_unit}) "
+            f"must exceed variable_cost_per_unit ({variable_cost_per_unit})."
+        )
+
+    if monthly_profit_at_scale <= 0:
+        raise ValueError(
+            f"Business not profitable at scale: monthly_profit_at_scale "
+            f"({monthly_profit_at_scale}) must be positive."
+        )
+
+    contribution_per_unit = revenue_per_unit - variable_cost_per_unit
+    projected_year1_profit = projected_year1_revenue - (monthly_fixed_costs * 12) - startup_costs
+
+    break_even_units = calculate_break_even(monthly_fixed_costs, contribution_per_unit)
+    year1_roi = calculate_roi(projected_year1_profit, total_investment)
+    payback_months = calculate_payback_period(total_investment, monthly_profit_at_scale)
 
     return {
-        "fixed_costs": fixed_costs,
-        "revenue_per_order": revenue_per_order,
-        "variable_cost_per_order": variable_cost_per_order,
-        "contribution_per_order": round(contribution_per_order, 2),
-        "break_even_orders_per_month": round(break_even_orders, 0),
+        "startup_costs": startup_costs,
+        "revenue_per_unit": revenue_per_unit,
+        "variable_cost_per_unit": variable_cost_per_unit,
+        "contribution_per_unit": round(contribution_per_unit, 2),
+        "monthly_fixed_costs": monthly_fixed_costs,
         "total_investment": total_investment,
-        "projected_5_year_profit": projected_5_year_profit,
-        "roi_percent": round(roi, 2),
-        "payback_period_months": round(payback_period, 1)
+        "projected_year1_revenue": projected_year1_revenue,
+        "projected_year1_profit": round(projected_year1_profit, 2),
+        "monthly_profit_at_scale": monthly_profit_at_scale,
+        "break_even_units_per_month": break_even_units,
+        "year1_roi_percent": year1_roi,
+        "payback_period_months": payback_months,
     }

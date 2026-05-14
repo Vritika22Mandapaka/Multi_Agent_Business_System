@@ -1,0 +1,19 @@
+Student Spending Behavior and Grocery Needs
+
+College students are a useful target segment because they have repeated grocery needs but often face constraints that make grocery shopping difficult. Many students have limited time, limited transportation, irregular schedules, and strict budgets. These factors make grocery planning and delivery more valuable if the service can reduce effort and control spending.
+
+Students are not a uniform group. The strongest potential users are off-campus students, graduate students, international students, students with part-time jobs, student athletes, and students living in shared apartments. Dorm students may also use the service, but their needs may be different because they may rely more on meal plans, snacks, convenience items, or small grocery bundles rather than full weekly grocery orders.
+
+Budget sensitivity is one of the most important adoption factors. Students may like convenience, but they are less likely to pay high delivery fees or accept hidden markups. A student-focused grocery platform should include transparent pricing, budget caps, low-cost bundle recommendations, and clear savings explanations. For example, the system could recommend a weekly “under $50 grocery plan” or compare reusable meal ingredients across multiple meals.
+
+Student grocery behavior is also repetitive. Many students buy the same breakfast, snacks, drinks, frozen foods, basic produce, and meal-prep ingredients every week. This makes AI prediction valuable. If the system learns repeated purchases and suggests weekly carts, it can reduce decision fatigue and increase retention. However, recommendations must stay useful and controllable. Students should be able to edit suggestions, set dietary preferences, remove disliked items, and set weekly budget limits.
+
+Campus timing matters. Grocery demand may rise at the beginning of semesters, before exams, during bad weather, and on weekends. Demand may fall during holidays, breaks, and summer. The business model should account for academic seasonality. A campus-first model should track weekly active users, repeat order rate, average order value, delivery cost per order, and student retention across semester cycles.
+
+The most promising pricing models are low delivery fees, discounted campus subscriptions, weekly grocery bundles, referral credits, and partnerships with local grocery stores. A subscription model may work if it provides clear savings, but a forced subscription may create friction. A freemium model with optional paid benefits may be easier to test.
+
+Research Agent Use:
+This document supports target customer identification, pain point analysis, demand assessment, pricing strategy, and adoption risk analysis.
+
+Source Notes:
+Market research on online grocery behavior indicates that convenience, budget, and personalization matter to consumers. For student markets, affordability and repeated weekly purchasing patterns are especially important because food spending is recurring and students often operate under fixed budgets.
