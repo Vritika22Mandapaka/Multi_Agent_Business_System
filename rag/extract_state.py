@@ -1,8 +1,6 @@
-# rag/extract_state.py
+
 # Extracts the NE US state from the business_idea string.
 # Called in app/main.py before building initial_state.
-#
-# Place this file at: Multi_Agent_Busisys/rag/extract_state.py
 
 from openai import APIConnectionError
 
